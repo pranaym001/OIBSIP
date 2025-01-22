@@ -1,0 +1,38 @@
+# Step 1: Import Libraries
+import pandas as pd
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+
+# Step 2: Load the Dataset
+# You can also load the dataset from a CSV file if you have downloaded it.
+iris = datasets.load_iris()
+X = iris.data  # Features (measurements)
+y = iris.target  # Target (species)
+
+# Step 3: Preprocess the Data
+# Convert to DataFrame for better visualization (optional)
+iris_df = pd.DataFrame(data=X, columns=iris.feature_names)
+iris_df['species'] = y
+
+# Step 4: Split the Data into Training and Testing Sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Step 5: Train the Model
+model = DecisionTreeClassifier(random_state=42)
+model.fit(X_train, y_train)
+
+# Step 6: Make Predictions
+y_pred = model.predict(X_test)
+
+# Step 7: Evaluate the Model
+accuracy = accuracy_score(y_test, y_pred)
+conf_matrix = confusion_matrix(y_test, y_pred)
+class_report = classification_report(y_test, y_pred)
+
+print(f"Accuracy: {accuracy:.2f}")
+print("Confusion Matrix:")
+print(conf_matrix)
+print("Classification Report:")
+print(class_report)
